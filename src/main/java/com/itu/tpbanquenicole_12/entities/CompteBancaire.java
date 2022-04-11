@@ -24,19 +24,36 @@ public class CompteBancaire implements Serializable {
     private String nom;
     private int solde;
     
-    public Long getId() {
-        return id;
-    }
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
 
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setSolde(int solde) {
+        this.solde = solde;
+    }
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public Long getId() {
+        return id;
+    }
+   
+
+    public String getNom() {
+        return nom;
+    }
+
+    public int getSolde() {
+        return solde;
+    }
   
     /**
-     *constructeur
+     *constructeurs
      */
     public CompteBancaire(){}
     

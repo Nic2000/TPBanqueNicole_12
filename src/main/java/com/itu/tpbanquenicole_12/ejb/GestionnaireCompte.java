@@ -5,8 +5,6 @@
 package com.itu.tpbanquenicole_12.ejb;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.annotation.sql.DataSourceDefinition;
 import javax.ejb.Stateless;
@@ -14,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import com.itu.tpbanquenicole_12.entities.CompteBancaire;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 /**
  *
  * @author Nicole
@@ -34,18 +33,19 @@ import javax.persistence.Query;
 @Stateless
 public class GestionnaireCompte {
 
-    @PersistenceContext(unitName = "banquePU")
+    @PersistenceContext (unitName = "banquePU")
     private EntityManager em;
+    
     public List<CompteBancaire> getAllComptes() {
-       Query query = em.createNamedQuery("CompteBancaire.findAll");
-       return query.getResultList();
+        TypedQuery query = em.createNamedQuery("CompteBancaire.findAll", CompteBancaire.class);
+        return query.getResultList();
     }
     public void creerCompte(CompteBancaire c) {
        em.persist(c);
     }
-    public int nbComptes(){
-        Query query = em.createNamedQuery("select count(c) from CompteBancaire c");
-        return (int) query.getSingleResult();
+    public long nbComptes(){
+        TypedQuery<Long> query = em.createQuery("select count(c) from CompteBancaire c", Long.class);
+        return query.getSingleResult();
     }   
     @Resource
     private javax.transaction.UserTransaction utx;
